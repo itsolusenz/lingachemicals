@@ -186,10 +186,11 @@ function ForgotPasswordPage() {
         <div className="z-10 relative w-full max-w-2xl">
           <div className="text-7xl font-bold leading-none text-gray-100">
             <div>Welcome to</div>
-            <div> Laabamone business solution ERP</div>
+            <div> Linga Chemical business solution ERP</div>
           </div>
           <div className="mt-24 text-lg tracking-tight leading-6 text-gray-400">
-            Laabamone business solution is a leading software developing company situated in Madurai.High achievement always takes place in the framework of high expectation.          </div>
+            Linga Chemicals is on a global mission to support the back bone of India; Agriculture. Our world class and environmental friendly products help the farmers in producing greater yield.
+          </div>
         </div>
       </Box>
     </div>
