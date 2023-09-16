@@ -1235,8 +1235,7 @@ const navigationConfig = [
     type: 'item',
     icon: 'heroicons-outline:home',
     url: 'dashboards/project',
-
-
+    translate: 'DASHBOARDS',
   },
   {
     id: 'company',
@@ -1244,13 +1243,15 @@ const navigationConfig = [
     type: 'item',
     icon: 'heroicons-outline:collection',
     url: 'apps/e-commerce/products',
+    translate: 'Company',
   },
   {
     id: 'itemgroup',
-    title: 'Item Group',
+    title: 'ItemGroup',
     type: 'item',
     icon: 'heroicons-outline:book-open',
     url: 'apps/e-commerce/itemgroup',
+    translate: 'ItemGroup',
   },
   {
     id: 'item',
@@ -1258,13 +1259,15 @@ const navigationConfig = [
     type: 'item',
     icon: 'heroicons-outline:template',
     url: 'apps/e-commerce/item',
+    translate: 'Item',
   },
   {
     id: 'usergroup',
-    title: 'User Group',
+    title: 'UserGroup',
     type: 'item',
     icon: 'heroicons-outline:user-group',
     url: 'apps/e-commerce/usergroup',
+    translate: 'UserGroup',
   },
   {
     id: 'user',
@@ -1272,6 +1275,7 @@ const navigationConfig = [
     type: 'item',
     icon: 'heroicons-outline:user',
     url: 'apps/e-commerce/user',
+    translate: 'User',
   },
 
 

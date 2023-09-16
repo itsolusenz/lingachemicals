@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 const Itemgroupadd = lazy(() => import('./product/itemgroup'));
 const Usergroupadd = lazy(() => import('./product/usergroup'));
 const Itemadd = lazy(() => import('./product/item'));
+const Useradd = lazy(() => import('./product/user'));
 
 const Product = lazy(() => import('./product/Product'));
 const Products = lazy(() => import('./products/Products'));
@@ -53,6 +54,10 @@ const ECommerceAppConfig = {
     {
       path: 'apps/e-commerce/usergroup/:productId/*',
       element: <Usergroupadd />,
+    },
+    {
+      path: 'apps/e-commerce/user/:productId/*',
+      element: <Useradd />,
     },
     {
       path: 'apps/e-commerce/orders',

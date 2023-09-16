@@ -24,7 +24,9 @@ import PricingTab from './itemtabs/PricingTab';
 import ProductImagesTab from './itemtabs/ProductImagesTab';
 import ShippingTab from './itemtabs/ShippingTab';
 import ContactTab from './itemtabs/ContactTab';
-import EditorTab from './itemtabs/editorTab';
+import SafetyeditorTab from './itemtabs/safetyeditorTab';
+import LegaleditorTab from './itemtabs/legaleditorTab';
+
 
 /**
  * Form Validation Schema
@@ -103,6 +105,7 @@ function Product(props) {
    * Tab Change
    */
   function handleTabChange(event, value) {
+
     setTabValue(value);
   }
 
@@ -188,7 +191,10 @@ function Product(props) {
                 <InventoryTab />
               </div>
               <div className={tabValue !== 5 ? 'hidden' : ''}>
-                <InventoryTab />
+                <SafetyeditorTab />
+              </div>
+              <div className={tabValue !== 5 ? 'hidden' : ''}>
+                <LegaleditorTab />
               </div>
             </div>
           </>

@@ -37,12 +37,12 @@ function ProfileApp() {
       header={
         <div className="flex flex-col">
           <img
-            className="h-160 lg:h-320 object-cover w-full"
-            src="assets/images/pages/profile/cover.jpg"
+            className="h-200 lg:h-320 object-cover w-full"
+            src="assets/images/pages/profile/nature2.jpg"
             alt="Profile Cover"
           />
-
-          <div className="flex flex-col flex-0 lg:flex-row items-center max-w-5xl w-full mx-auto px-32 lg:h-72">
+        
+          {/* <div className="flex flex-col flex-0 lg:flex-row items-center max-w-5xl w-full mx-auto px-32 lg:h-72">
             <div className="-mt-96 lg:-mt-88 rounded-full">
               <motion.div initial={{ scale: 0 }} animate={{ scale: 1, transition: { delay: 0.1 } }}>
                 <Avatar
@@ -112,16 +112,17 @@ function ProfileApp() {
                 />
               </Tabs>
             </div>
-          </div>
+          </div> */}
         </div>
       }
-      content={
-        <div className="flex flex-auto justify-center w-full max-w-5xl mx-auto p-24 sm:p-32">
-          {selectedTab === 0 && <TimelineTab />}
-          {selectedTab === 1 && <AboutTab />}
-          {selectedTab === 2 && <PhotosVideosTab />}
-        </div>
-      }
+      
+      // content={
+      //   <div className="flex flex-auto justify-center w-full max-w-5xl mx-auto p-24 sm:p-32">
+      //     {selectedTab === 0 && <TimelineTab />}
+      //     {selectedTab === 1 && <AboutTab />}
+      //     {selectedTab === 2 && <PhotosVideosTab />}
+      //   </div>
+      // }
       scroll={isMobile ? 'normal' : 'page'}
     />
   );
