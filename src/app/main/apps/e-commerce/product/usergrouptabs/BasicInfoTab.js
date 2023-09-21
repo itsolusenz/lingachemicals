@@ -46,7 +46,8 @@ function BasicInfoTab(props) {
       const json = await response.json();
       console.log('company', json);
       setcompanyname(json[0].name);
-      setdesc(json[0].description);
+      setdesc(json[0].desc);
+      setcompid(json[0].compname);
 
       setCreateObjectURL(json[0].image)
       setcompanylist(json);
