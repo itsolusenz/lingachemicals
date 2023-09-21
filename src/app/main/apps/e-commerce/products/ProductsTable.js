@@ -15,14 +15,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import withRouter from '@fuse/core/withRouter';
 import FuseLoading from '@fuse/core/FuseLoading';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { getProducts, selectProducts, selectProductsSearchText } from '../store/productsSlice';
+import { getProducts1, selectProducts, selectProductsSearchText } from '../store/productsSlice';
 import ProductsTableHead from './ProductsTableHead';
 
 function ProductsTable(props) {
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
   const searchText = useSelector(selectProductsSearchText);
-
+  const [companylist, setcompanylist] = useState('');
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState(products);
@@ -34,8 +34,18 @@ function ProductsTable(props) {
   });
 
   useEffect(() => {
-    dispatch(getProducts()).then(() => setLoading(false));
-  }, [dispatch]);
+    const getCompany = async () => {
+
+      const response = await fetch('https://www.laabamone.com/LingaChemicals/api.php?eventtype=company&viewtype=listview');
+      const json = await response.json();
+      console.log('company', json);
+      setcompanylist(json);
+
+
+    }
+    getCompany();
+    // dispatch(getProducts1()).then(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     if (searchText.length !== 0) {
@@ -75,7 +85,7 @@ function ProductsTable(props) {
   }
 
   function handleClick(item) {
-    props.navigate(`/apps/e-commerce/products/${item.id}/${item.handle}`);
+    props.navigate(`/apps/e-commerce/products/${item.id}`);
   }
 
   function handleCheck(event, id) {
@@ -106,15 +116,15 @@ function ProductsTable(props) {
     setRowsPerPage(event.target.value);
   }
 
-  if (loading) {
+  /*if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
         <FuseLoading />
       </div>
     );
-  }
+  }*/
 
-  if (data.length === 0) {
+  if (companylist.length === 0) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -122,145 +132,133 @@ function ProductsTable(props) {
         className="flex flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          There are no products!
+          There are no Company!
         </Typography>
       </motion.div>
     );
   }
+  if (companylist.length > 0) {
+    return (
+      <div className="w-full flex flex-col min-h-full">
+        <FuseScrollbars className="grow overflow-x-auto">
+          <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
+            <ProductsTableHead
+              selectedProductIds={selected}
+              order={order}
+              onSelectAllClick={handleSelectAllClick}
+              onRequestSort={handleRequestSort}
+              rowCount={companylist.length}
+              onMenuItemClick={handleDeselect}
+            />
 
-  return (
-    <div className="w-full flex flex-col min-h-full">
-      <FuseScrollbars className="grow overflow-x-auto">
-        <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
-          <ProductsTableHead
-            selectedProductIds={selected}
-            order={order}
-            onSelectAllClick={handleSelectAllClick}
-            onRequestSort={handleRequestSort}
-            rowCount={data.length}
-            onMenuItemClick={handleDeselect}
-          />
-
-          <TableBody>
-            {_.orderBy(
-              data,
-              [
-                (o) => {
-                  switch (order.id) {
-                    case 'categories': {
-                      return o.categories[0];
+            <TableBody>
+              {_.orderBy(
+                companylist,
+                [
+                  (o) => {
+                    switch (order.id) {
+                      case 'categories': {
+                        return o.categories[0];
+                      }
+                      default: {
+                        return o[order.id];
+                      }
                     }
-                    default: {
-                      return o[order.id];
-                    }
-                  }
-                },
-              ],
-              [order.direction]
-            )
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((n) => {
-                const isSelected = selected.indexOf(n.id) !== -1;
-                return (
-                  <TableRow
-                    className="h-72 cursor-pointer"
-                    hover
-                    role="checkbox"
-                    aria-checked={isSelected}
-                    tabIndex={-1}
-                    key={n.id}
-                    selected={isSelected}
-                    onClick={(event) => handleClick(n)}
-                  >
-                    <TableCell className="w-40 md:w-64 text-center" padding="none">
-                      <Checkbox
-                        checked={isSelected}
-                        onClick={(event) => event.stopPropagation()}
-                        onChange={(event) => handleCheck(event, n.id)}
-                      />
-                    </TableCell>
-
-                    <TableCell
-                      className="w-52 px-4 md:px-0"
-                      component="th"
-                      scope="row"
-                      padding="none"
+                  },
+                ],
+                [order.direction]
+              )
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((n) => {
+                  const isSelected = selected.indexOf(n.id) !== -1;
+                  return (
+                    <TableRow
+                      className="h-72 cursor-pointer"
+                      hover
+                      role="checkbox"
+                      aria-checked={isSelected}
+                      tabIndex={-1}
+                      key={n.id}
+                      selected={isSelected}
+                      onClick={(event) => handleClick(n)}
                     >
-                      {n.images.length > 0 && n.featuredImageId ? (
-                        <img
-                          className="w-full block rounded"
-                          src={_.find(n.images, { id: n.featuredImageId }).url}
-                          alt={n.name}
+                      <TableCell className="w-40 md:w-64 text-center" padding="none">
+                        <Checkbox
+                          checked={isSelected}
+                          onClick={(event) => event.stopPropagation()}
+                          onChange={(event) => handleCheck(event, n.id)}
                         />
-                      ) : (
-                        <img
-                          className="w-full block rounded"
-                          src="assets/images/apps/ecommerce/product-image-placeholder.png"
-                          alt={n.name}
-                        />
-                      )}
-                    </TableCell>
+                      </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.name}
-                    </TableCell>
-
-                    <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
-                      {n.ContactPerson}
-                    </TableCell>
-
-                    {/*}  <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      <span>$</span>
-                      {n.priceTaxIncl}
-                    </TableCell>
-
-                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.quantity}
-                      <i
-                        className={clsx(
-                          'inline-block w-8 h-8 rounded mx-8',
-                          n.quantity <= 5 && 'bg-red',
-                          n.quantity > 5 && n.quantity <= 25 && 'bg-orange',
-                          n.quantity > 25 && 'bg-green'
+                      <TableCell
+                        className="w-52 px-4 md:px-0"
+                        component="th"
+                        scope="row"
+                        padding="none"
+                      >
+                        {n.compimage != '' ? (
+                          <img
+                            className="w-full block rounded"
+                            src={n.compimage}
+                            alt={n.name}
+                          />
+                        ) : (
+                          <img
+                            className="w-full block rounded"
+                            src="assets/images/apps/ecommerce/product-image-placeholder.png"
+                            alt={n.name}
+                          />
                         )}
-                      />
-                    </TableCell>*/}
+                      </TableCell>
 
-                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.active ? (
-                        <FuseSvgIcon className="text-green" size={20}>
-                          heroicons-outline:check-circle
-                        </FuseSvgIcon>
-                      ) : (
-                        <FuseSvgIcon className="text-red" size={20}>
-                          heroicons-outline:minus-circle
-                        </FuseSvgIcon>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </FuseScrollbars>
+                      <TableCell className="p-4 md:p-16" component="th" scope="row">
+                        {n.name}
+                      </TableCell>
 
-      <TablePagination
-        className="shrink-0 border-t-1"
-        component="div"
-        count={data.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        backIconButtonProps={{
-          'aria-label': 'Previous Page',
-        }}
-        nextIconButtonProps={{
-          'aria-label': 'Next Page',
-        }}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </div>
-  );
+                      <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
+                        {n.email}
+                      </TableCell>
+
+
+                      <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                        {n.status ? (
+                          <FuseSvgIcon className="text-green" size={20}>
+                            heroicons-outline:check-circle
+                          </FuseSvgIcon>
+                        ) : (
+                          <FuseSvgIcon className="text-red" size={20}>
+                            heroicons-outline:minus-circle
+                          </FuseSvgIcon>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </FuseScrollbars>
+
+        <TablePagination
+          className="shrink-0 border-t-1"
+          component="div"
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          backIconButtonProps={{
+            'aria-label': 'Previous Page',
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'Next Page',
+          }}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </div>
+    );
+  }
+  else {
+    return (<>Loading...</>);
+  }
 }
 
 export default withRouter(ProductsTable);

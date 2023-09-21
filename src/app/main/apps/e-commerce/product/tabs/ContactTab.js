@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 function ContactTab(props) {
   const methods = useFormContext();
   const { control } = methods;
+  const { editid } = props;
   const [countryerror, setcountryerror] = useState('');
   const [stateerror, setstateerror] = useState('');
   const [cityerror, setcityerror] = useState('');
@@ -31,10 +32,31 @@ function ContactTab(props) {
   const [landmark, setlandmark] = useState('');
   const [Countrylist, setCountrylist] = useState([]);
   const [isLoading, setisLoading] = useState(false);
+  const [companylist, setcompanylist] = useState('');
   useEffect(() => {
     // Perform localStorage action
+    const getCompany = async (a) => {
+
+      const response = await fetch('https://www.laabamone.com/LingaChemicals/api.php?eventtype=company&viewtype=listview&id=' + a);
+      const json = await response.json();
+      console.log('company', json);
+      setadd1(json[0].flat);
+      setadd2(json[0].street);
+      setcity(json[0].city);
+      setstate(json[0].state);
+      setcountryval(json[0].countryval);
+      setpostcode(json[0].postcode);
+      setphonew(json[0].phonew);
+      setphone(json[0].mobile);
+      setphonewhat(json[0].phonewhat);
+      setwebsite(json[0].website);
+      setemail(json[0].email);
 
 
+      setcompanylist(json);
+
+
+    }
     const getCountry = async (a) => {
 
       const response = await fetch('https://www.laabamone.com/appoint_api.php?eventtype=countylist');
@@ -45,8 +67,12 @@ function ContactTab(props) {
 
     }
 
+    if (editid != null && editid != undefined && editid != '' && editid != 'new') {
+      getCompany(editid);
+    }
 
     getCountry();
+
 
 
 
@@ -58,20 +84,38 @@ function ContactTab(props) {
     event.preventDefault();
     setisLoading(true);
     let str = '';
-    fetch('https://www.laabamone.com/LingaChemicals/api.php?eventtype=company'
+
+    if (editid != null && editid != undefined && editid != '') {
+      str = "&id=" + editid;
+    }
+    console.log('https://www.laabamone.com/LingaChemicals/api.php?eventtype=company'
       + str + '&country=' + countryval +
       '&state=' + state +
       '&city=' + city +
       '&postcode=' + postcode +
-      '&add1=' + add1 +
-      '&add2=' + add2 +
+      '&flat=' + add1 +
+      '&street=' + add2 +
       '&landmark=' + landmark +
       '&mobile=' + phone +
       '&phonew=' + phonew +
       '&phonewhat=' + phonewhat +
       '&website=' + website +
-      '&email=' + email
-
+      '&email=' + email +
+      '&status=1');
+    fetch('https://www.laabamone.com/LingaChemicals/api.php?eventtype=company'
+      + str + '&country=' + countryval +
+      '&state=' + state +
+      '&city=' + city +
+      '&postcode=' + postcode +
+      '&flat=' + add1 +
+      '&street=' + add2 +
+      '&landmark=' + landmark +
+      '&mobile=' + phone +
+      '&phonew=' + phonew +
+      '&phonewhat=' + phonewhat +
+      '&website=' + website +
+      '&email=' + email +
+      '&status=1'
     )
       .then((res) => res.json())
       .then(
@@ -143,6 +187,17 @@ function ContactTab(props) {
           fullWidth
         />
 
+        <TextField
+          value={state}
+          onChange={(e) => setstate(e.target.value)}
+          className="mt-8 mb-16"
+          required
+          label="State "
+          autoFocus
+          id="sku"
+          variant="outlined"
+          fullWidth
+        />
 
 
         <TextField
@@ -275,7 +330,7 @@ function ContactTab(props) {
 
         }
       </form>
-      <ToastContainer />
+      <ToastContainer style={{ marginTop: '50px' }} />
     </div>
   );
 }

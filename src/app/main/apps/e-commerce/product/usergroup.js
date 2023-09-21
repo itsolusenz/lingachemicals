@@ -104,7 +104,7 @@ function Product(props) {
   /**
    * Show Message if the requested products is not exists
    */
-  if (noProduct) {
+  {/*if (noProduct) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -125,17 +125,17 @@ function Product(props) {
         </Button>
       </motion.div>
     );
-  }
+  }*/}
 
   /**
    * Wait while product data is loading and form is setted
    */
-  if (
-    _.isEmpty(form) ||
-    (product && routeParams.productId !== product.id && routeParams.productId !== 'new')
-  ) {
-    return <FuseLoading />;
-  }
+  /* if (
+     _.isEmpty(form) ||
+     (product && routeParams.productId !== product.id && routeParams.productId !== 'new')
+   ) {
+     return <FuseLoading />;
+   }*/
 
   return (
     <FormProvider {...methods}>
@@ -145,7 +145,7 @@ function Product(props) {
           <>
             <div className="p-16 sm:p-24 max-w-3xl">
               <div className={tabValue !== 0 ? 'hidden' : ''}>
-                <BasicInfoTab />
+                <BasicInfoTab editid={`${routeParams.productId}`} />
               </div>
             </div>
             {/*} <Tabs

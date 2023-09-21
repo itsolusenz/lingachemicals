@@ -32,13 +32,7 @@ const rows = [
     label: 'Name',
     sort: true,
   },
-  {
-    id: 'categories',
-    align: 'left',
-    disablePadding: false,
-    label: 'Contact Person',
-    sort: true,
-  },
+
   {
     id: 'active',
     align: 'left',

@@ -93,8 +93,8 @@ function Product(props) {
       /**
        * Reset Product on component unload
        */
-      dispatch(resetProduct());
-      setNoProduct(false);
+      //dispatch(resetProduct());
+      // setNoProduct(false);
     };
   }, [dispatch]);
 
@@ -108,7 +108,7 @@ function Product(props) {
   /**
    * Show Message if the requested products is not exists
    */
-  if (noProduct) {
+  {/*if (noProduct) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -125,21 +125,19 @@ function Product(props) {
           to="/apps/e-commerce/products"
           color="inherit"
         >
-          Go to Products Page
+          Go to Products Page{`${routeParams.productId}`}
         </Button>
       </motion.div>
     );
-  }
+  }*/}
 
   /**
    * Wait while product data is loading and form is setted
    */
-  if (
-    _.isEmpty(form) ||
-    (product && routeParams.productId !== product.id && routeParams.productId !== 'new')
+  {/*if (_.isEmpty(form) ||(product && routeParams.productId !== product.id && routeParams.productId !== 'new')
   ) {
     return <FuseLoading />;
-  }
+  }*/}
 
   return (
     <FormProvider {...methods}>
@@ -164,24 +162,22 @@ function Product(props) {
             </Tabs>
             <div className="p-16 sm:p-24 max-w-3xl">
               <div className={tabValue !== 0 ? 'hidden' : ''}>
-                <BasicInfoTab />
+                <BasicInfoTab editid={`${routeParams.productId}`} />
               </div>
 
               <div className={tabValue !== 1 ? 'hidden' : ''}>
-                <ContactTab />
+                <ContactTab editid={`${routeParams.productId}`} />
               </div>
 
               <div className={tabValue !== 2 ? 'hidden' : ''}>
-                <PricingTab />
+                <PricingTab editid={`${routeParams.productId}`} />
               </div>
 
               <div className={tabValue !== 3 ? 'hidden' : ''}>
-                <InventoryTab />
+                <InventoryTab editid={`${routeParams.productId}`} />
               </div>
 
-              <div className={tabValue !== 4 ? 'hidden' : ''}>
-                <ShippingTab />
-              </div>
+
             </div>
           </>
         }

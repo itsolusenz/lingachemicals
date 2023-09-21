@@ -8,6 +8,13 @@ export const getProducts = createAsyncThunk('eCommerceApp/products/getProducts',
   return data;
 });
 
+export const getProducts1 = async () => {
+  const response = await axios.get('https://www.laabamone.com/LingaChemicals/api.php?eventtype=company&viewtype=listview');
+  const data = await response.data;
+
+  return data;
+};
+
 export const removeProducts = createAsyncThunk(
   'eCommerceApp/products',
   async (productIds, { dispatch, getState }) => {
