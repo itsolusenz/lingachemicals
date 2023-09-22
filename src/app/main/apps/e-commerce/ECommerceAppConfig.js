@@ -13,7 +13,7 @@ const Itemgroup = lazy(() => import('./itemgroup/Products'));
 const Item = lazy(() => import('./item/Products'));
 const Usergroup = lazy(() => import('./usergroup/Products'));
 const User = lazy(() => import('./user/Products'));
-
+const Tax = lazy(() => import('./tax/Products'));
 const ECommerceAppConfig = {
   settings: {
     layout: {},
@@ -22,6 +22,10 @@ const ECommerceAppConfig = {
     {
       path: 'apps/e-commerce/products',
       element: <Products />,
+    },
+    {
+      path: 'apps/e-commerce/tax',
+      element: <Tax />,
     },
     {
       path: 'apps/e-commerce/itemgroup',
@@ -42,6 +46,10 @@ const ECommerceAppConfig = {
     {
       path: 'apps/e-commerce/products/:productId/*',
       element: <Product />,
+    },
+    {
+      path: 'apps/e-commerce/tax/:productId/*',
+      element: <Tax />,
     },
     {
       path: 'apps/e-commerce/itemgroup/:productId/*',

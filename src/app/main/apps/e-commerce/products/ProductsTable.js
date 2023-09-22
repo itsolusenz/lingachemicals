@@ -39,7 +39,9 @@ function ProductsTable(props) {
       const response = await fetch('https://www.laabamone.com/LingaChemicals/api.php?eventtype=company&viewtype=listview');
       const json = await response.json();
       console.log('company', json);
-      setcompanylist(json);
+      if (json[0].count > 0) {
+        setcompanylist(json);
+      }
 
 
     }

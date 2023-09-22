@@ -22,6 +22,11 @@ function UserMenu(props) {
 
   const userMenuClose = () => {
     setUserMenu(null);
+    localStorage.setItem("logintype", '');
+    localStorage.setItem("loginid", '');
+    localStorage.setItem("loginname", '');
+    localStorage.setItem("loginimage", '');
+    localStorage.removeItem();
   };
 
   return (
@@ -33,18 +38,18 @@ function UserMenu(props) {
       >
         <div className="hidden md:flex flex-col mx-4 items-end">
           <Typography component="span" className="font-semibold flex">
-            {user.data.displayName}
+            {localStorage.getItem("loginname")}
           </Typography>
           <Typography className="text-11 font-medium capitalize" color="text.secondary">
-            {user.role.toString()}
-            {(!user.role || (Array.isArray(user.role) && user.role.length === 0)) && 'Guest'}
+
+            {localStorage.getItem("logintype")}
           </Typography>
         </div>
 
-        {user.data.photoURL ? (
-          <Avatar className="md:mx-4" alt="user photo" src={user.data.photoURL} />
+        {localStorage.getItem("loginimage") != '' ? (
+          <Avatar className="md:mx-4" alt="user photo" src={localStorage.getItem("loginimage")} />
         ) : (
-          <Avatar className="md:mx-4">{user.data.displayName[0]}</Avatar>
+          <Avatar className="md:mx-4">{localStorage.getItem("loginname")[0]}</Avatar>
         )}
       </Button>
 
@@ -81,7 +86,7 @@ function UserMenu(props) {
           </>
         ) : (
           <>
-             <MenuItem component={Link} to="/apps/profile" onClick={userMenuClose} role="button">
+            <MenuItem component={Link} to="/apps/profile" onClick={userMenuClose} role="button">
               <ListItemIcon className="min-w-40">
                 <FuseSvgIcon>heroicons-outline:user-circle</FuseSvgIcon>
               </ListItemIcon>

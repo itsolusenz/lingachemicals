@@ -25,13 +25,7 @@ const rows = [
     label: '',
     sort: false,
   },
-  {
-    id: 'name',
-    align: 'left',
-    disablePadding: false,
-    label: 'User Group',
-    sort: true,
-  },
+
   {
     id: 'name',
     align: 'left',
@@ -40,10 +34,10 @@ const rows = [
     sort: true,
   },
   {
-    id: 'name',
+    id: 'Value',
     align: 'left',
     disablePadding: false,
-    label: 'Email',
+    label: 'Value',
     sort: true,
   },
   {

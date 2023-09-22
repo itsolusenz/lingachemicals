@@ -10,6 +10,7 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { removeProduct, saveProduct } from '../store/productSlice';
 
 function ProductHeader(props) {
+  const { editid } = props
   const dispatch = useDispatch();
   const methods = useFormContext();
   const { formState, watch, getValues } = methods;
@@ -33,7 +34,7 @@ function ProductHeader(props) {
   return (
     <div className="flex flex-col sm:flex-row flex-1 w-full items-center justify-between space-y-8 sm:space-y-0 py-32 px-24 md:px-32">
       <div className="flex flex-col items-center sm:items-start space-y-8 sm:space-y-0 w-full sm:max-w-full min-w-0">
-        <motion.div
+        <motion.div className="flex"
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1, transition: { delay: 0.3 } }}
         >
@@ -51,15 +52,18 @@ function ProductHeader(props) {
             </FuseSvgIcon>
             <span className="flex mx-4 font-medium">User Group</span>
           </Typography>
+          <Typography sx={{ color: 'blue' }}>
+            / {editid !== 'new' ? 'Update' : 'Add New'} Item Group
+          </Typography>
         </motion.div>
 
-        <div className="flex items-center max-w-full">
+        {/*} <div className="flex items-center max-w-full">
           <motion.div
             className="hidden sm:flex"
             initial={{ scale: 0 }}
             animate={{ scale: 1, transition: { delay: 0.3 } }}
           >
-            {/*}  {images.length > 0 && featuredImageId ? (
+             {images.length > 0 && featuredImageId ? (
               <img
                 className="w-32 sm:w-48 rounded"
                 src={_.find(images, { id: featuredImageId }).url}
@@ -71,7 +75,7 @@ function ProductHeader(props) {
                 src="assets/images/apps/ecommerce/product-image-placeholder.png"
                 alt={name}
               />
-            )}*/}
+            )}
           </motion.div>
           <motion.div
             className="flex flex-col items-center sm:items-start min-w-0 mx-8 sm:mx-16"
@@ -85,9 +89,9 @@ function ProductHeader(props) {
               User Group Detail
             </Typography>
           </motion.div>
-        </div>
+        </div>*/}
       </div>
-      <motion.div
+      {/*} <motion.div
         className="flex"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
@@ -110,7 +114,7 @@ function ProductHeader(props) {
         >
           Save
         </Button>
-      </motion.div>
+      </motion.div>*/}
     </div>
   );
 }

@@ -40,7 +40,9 @@ function ProductsTable(props) {
       const response = await fetch('https://www.laabamone.com/LingaChemicals/api.php?eventtype=usergroup&viewtype=listview');
       const json = await response.json();
       console.log('company', json);
-      setcompanylist(json);
+      if (json[0].count > 0) {
+        setcompanylist(json);
+      }
 
 
     }
@@ -133,7 +135,7 @@ function ProductsTable(props) {
         className="flex flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          There are no products!
+          No data Available.
         </Typography>
       </motion.div>
     );

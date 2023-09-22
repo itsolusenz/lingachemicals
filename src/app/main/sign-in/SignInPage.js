@@ -1,10 +1,13 @@
+import React, { Fragment, useState, useEffect } from 'react';
+import { IconButton, Alert, Stack, OutlinedInput, InputAdornment, TextField, Box, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
-import Button from '@mui/material/Button';
+
 import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
+
 import FormControlLabel from '@mui/material/FormControlLabel';
-import TextField from '@mui/material/TextField';
+
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
@@ -12,11 +15,12 @@ import _ from '@lodash';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
+
 import Paper from '@mui/material/Paper';
-import { useEffect } from 'react';
 import jwtService from '../../auth/services/jwtService';
 import M1 from '../../auth/logo1.png';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 /**
  * Form Validation Schema
  */
@@ -44,11 +48,18 @@ function SignInPage() {
   const { isValid, dirtyFields, errors } = formState;
 
   useEffect(() => {
-    setValue('email', 'admin@fusetheme.com', { shouldDirty: true, shouldValidate: true });
-    setValue('password', 'admin', { shouldDirty: true, shouldValidate: true });
+    // setValue('email', 'admin@lingachemicals.com', { shouldDirty: true, shouldValidate: true });
+    // setValue('password', 'admin', { shouldDirty: true, shouldValidate: true });
   }, [setValue]);
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [err, seterr] = React.useState('');
+  const [suc, setsuc] = React.useState('');
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  function onSubmit({ email, password }) {
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  function onSubmit1(email, password) {
     jwtService
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
@@ -63,11 +74,56 @@ function SignInPage() {
         });
       });
   }
+  function onSubmit({ email, password }) {
 
+    console.log('https://www.laabamone.com/LingaChemicals/api.php?eventtype=login&email=' + email
+      + '&password=' + password);
+    fetch('https://www.laabamone.com/LingaChemicals/api.php?eventtype=login&email=' + email
+      + '&password=' + password
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log('yessssssss');
+          const id = result[0]['id'];
+          const message = result[0]['message'];
+          if (id != undefined && message == 'success') {
+            const logintype = result[0]['logintype'];
+            localStorage.setItem("logintype", logintype);
+            localStorage.setItem("loginid", id);
+            localStorage.setItem("loginname", result[0]['loginname']);
+            localStorage.setItem("loginimage", result[0]['loginimage']);
+            onSubmit1('admin@lingachemicals.com', 'admin');
+            setsuc('Successfully Logged in');
+            seterr('');
+          }
+          else {
+            const errormsg = result[0]['errormsg'];
+            setsuc('');
+            seterr(errormsg);
+            // toast.error(errormsg)
+            // setisLoading(false);
+          }
+
+
+          console.log(result);
+        },
+        (error) => {
+          console.log('no');
+          console.log(error);
+          setsuc('');
+          seterr(error);
+          //  toast.error("Try again..Data not update..");
+          //setisLoading(false);
+        }
+      );
+  }
   return (
     <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
       <Paper className="h-full sm:h-auto md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-16 sm:p-48 md:p-64 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none ltr:border-r-1 rtl:border-l-1">
         <div className="w-full max-w-320 sm:w-320 mx-auto sm:mx-0">
+
+
           <img className="w-48" src={M1} alt="logo" style={{ width: "110px" }} />
 
           <Typography className="mt-32 text-4xl font-extrabold tracking-tight leading-tight">
@@ -86,6 +142,11 @@ function SignInPage() {
             className="flex flex-col justify-center w-full mt-32"
             onSubmit={handleSubmit(onSubmit)}
           >
+            <Stack sx={{ width: '100%', marginBottom: '10px' }} spacing={2} >
+              {err != '' && <Alert severity="warning">{err}</Alert>}
+              {suc != '' && <Alert severity="warning">{suc}</Alert>}
+            </Stack>
+            <br /><br />
             <Controller
               name="email"
               control={control}
@@ -109,7 +170,33 @@ function SignInPage() {
               name="password"
               control={control}
               render={({ field }) => (
-                <TextField
+                <FormControl variant="outlined" fullWidth>
+                  <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                  <OutlinedInput
+                    {...field}
+                    required
+                    error={!!errors.password}
+                    helperText={errors?.password?.message}
+                    type={showPassword ? 'text' : 'password'}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
+
+              )}
+            />
+            {/* <TextField
                   {...field}
                   className="mb-24"
                   label="Password"
@@ -119,10 +206,7 @@ function SignInPage() {
                   variant="outlined"
                   required
                   fullWidth
-                />
-              )}
-            />
-
+                /> */}
             <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between">
               <Controller
                 name="remember"

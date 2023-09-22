@@ -22,7 +22,7 @@ function ProductsTable(props) {
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
   const searchText = useSelector(selectProductsSearchText);
-
+  const [companylist, setcompanylist] = useState('');
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState(products);
@@ -33,10 +33,24 @@ function ProductsTable(props) {
     id: null,
   });
 
+  /* useEffect(() => {
+     dispatch(getProducts()).then(() => setLoading(false));
+   }, [dispatch]);*/
   useEffect(() => {
-    dispatch(getProducts()).then(() => setLoading(false));
-  }, [dispatch]);
+    const getCompany = async () => {
 
+      const response = await fetch('https://www.laabamone.com/LingaChemicals/api.php?eventtype=item&viewtype=listview');
+      const json = await response.json();
+      console.log('company', json);
+      if (json[0].count > 0) {
+        setcompanylist(json);
+      }
+
+
+    }
+    getCompany();
+    // dispatch(getProducts()).then(() => setLoading(false));
+  }, []);
   useEffect(() => {
     if (searchText.length !== 0) {
       setData(
@@ -106,15 +120,15 @@ function ProductsTable(props) {
     setRowsPerPage(event.target.value);
   }
 
-  if (loading) {
+  /*if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
         <FuseLoading />
       </div>
     );
-  }
+  }*/
 
-  if (data.length === 0) {
+  if (companylist.length === 0) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -137,13 +151,13 @@ function ProductsTable(props) {
             order={order}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
-            rowCount={data.length}
+            rowCount={companylist.length}
             onMenuItemClick={handleDeselect}
           />
 
           <TableBody>
             {_.orderBy(
-              data,
+              companylist,
               [
                 (o) => {
                   switch (order.id) {
@@ -186,10 +200,10 @@ function ProductsTable(props) {
                       scope="row"
                       padding="none"
                     >
-                      {n.images.length > 0 && n.featuredImageId ? (
+                      {n.image != '' ? (
                         <img
                           className="w-full block rounded"
-                          src={_.find(n.images, { id: n.featuredImageId }).url}
+                          src={n.image}
                           alt={n.name}
                         />
                       ) : (
@@ -227,7 +241,7 @@ function ProductsTable(props) {
                     </TableCell>*/}
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.active ? (
+                      {n.status == '1' ? (
                         <FuseSvgIcon className="text-green" size={20}>
                           heroicons-outline:check-circle
                         </FuseSvgIcon>

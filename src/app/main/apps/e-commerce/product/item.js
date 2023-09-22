@@ -148,7 +148,7 @@ function Product(props) {
   return (
     <FormProvider {...methods}>
       <FusePageCarded
-        header={<ProductHeader />}
+        header={<ProductHeader editid={`${routeParams.productId}`}/>}
         content={
           <>
             <Tabs
@@ -172,29 +172,29 @@ function Product(props) {
             </Tabs>
             <div className="p-16 sm:p-24 max-w-3xl">
               <div className={tabValue !== 0 ? 'hidden' : ''}>
-                <EditorTab />
+                <BasicInfoTab editid={`${routeParams.productId}`}/>
               </div>
 
               <div className={tabValue !== 1 ? 'hidden' : ''}>
-                <ContactTab />
+                <ContactTab editid={`${routeParams.productId}`}/>
               </div>
 
               <div className={tabValue !== 2 ? 'hidden' : ''}>
-                <PricingTab />
+                <PricingTab editid={`${routeParams.productId}`}/>
               </div>
 
               <div className={tabValue !== 3 ? 'hidden' : ''}>
-                <InventoryTab />
+                <InventoryTab editid={`${routeParams.productId}`}/>
               </div>
 
               <div className={tabValue !== 4 ? 'hidden' : ''}>
-                <InventoryTab />
+                <InventoryTab editid={`${routeParams.productId}`}/>
               </div>
               <div className={tabValue !== 5 ? 'hidden' : ''}>
-                <SafetyeditorTab />
+                <SafetyeditorTab editid={`${routeParams.productId}`}/>
               </div>
               <div className={tabValue !== 5 ? 'hidden' : ''}>
-                <LegaleditorTab />
+                <LegaleditorTab editid={`${routeParams.productId}`}/>
               </div>
             </div>
           </>

@@ -140,7 +140,7 @@ function Product(props) {
   return (
     <FormProvider {...methods}>
       <FusePageCarded
-        header={<ProductHeader />}
+        header={<ProductHeader editid={`${routeParams.productId}`}/>}
         content={
           <>
             <div className="p-16 sm:p-24 max-w-3xl">

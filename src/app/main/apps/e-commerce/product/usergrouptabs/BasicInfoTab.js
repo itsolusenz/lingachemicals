@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { TextField, Box, Button } from '@mui/material';
+import { TextField, Box, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Controller, useFormContext } from 'react-hook-form';
 import ProductImagesTab from './ProductImagesTab';
@@ -28,6 +28,10 @@ function BasicInfoTab(props) {
   const [companylist, setcompanylist] = useState('');
   const [tagarr, settagarr] = useState([]);
   const [createObjectURL, setCreateObjectURL] = useState(null);
+
+  const [status, setstatus] = useState('');
+
+
   //const images = watch('images');
   useEffect(() => {
     // Perform localStorage action
@@ -35,8 +39,11 @@ function BasicInfoTab(props) {
 
       const response = await fetch('https://www.laabamone.com/LingaChemicals/api.php?eventtype=company&viewtype=listview');
       const json = await response.json();
+
       console.log('company', json);
-      setcompanylist(json);
+      if (json[0].count > 0) {
+        setcompanylist(json);
+      }
 
 
     }
@@ -90,15 +97,15 @@ function BasicInfoTab(props) {
         setisLoading(false);
         toast.success("Successfully Added");
         setTimeout(function () {
-          window.location.href = "/apps/e-commerce/products/" + id;
-        }, 4000)
+          window.location.href = "/apps/e-commerce/usergroup/" + id;
+        }, 2000)
 
       })
       .catch((error) => {
         toast.error("Error in Product image updation...");
         setTimeout(function () {
-          window.location.href = "/apps/e-commerce/products/" + id;
-        }, 4000)
+          window.location.href = "/apps/e-commerce/usergroup/" + id;
+        }, 2000)
         setisLoading(false);
         console.log({ status: `upload failed ${error}` });
       })
@@ -115,11 +122,11 @@ function BasicInfoTab(props) {
     console.log('https://www.laabamone.com/LingaChemicals/api.php?eventtype=usergroup'
       + str + '&name=' + companyname +
       '&desc=' + desc +
-      '&compid=' + compid + '&status=1')
+      '&compid=' + compid + '&status=' + status)
     fetch('https://www.laabamone.com/LingaChemicals/api.php?eventtype=usergroup'
       + str + '&name=' + companyname +
       '&desc=' + desc +
-      '&compid=' + compid + '&status=1'
+      '&compid=' + compid + '&status=' + status
 
     )
       .then((res) => res.json())
@@ -168,46 +175,75 @@ function BasicInfoTab(props) {
   }
   if (companylist.length > 0) {
     return (
-      <div>
+      <div >
 
-        <form onSubmit={SaveCompany}>
-          <Autocomplete
-            value={compid}
-            inputValue={compid}
-            onInputChange={(event, newInputValue) => {
-              {
-                // console.log(event, 'event')
-                //alert(event);
-                setcompid(newInputValue);
-              }
-            }}
-            disablePortal
-            id="combo-box-demo"
-            options={companylist.map((a, b) => a.name)}
-            //  getOptionLabel={(option) => option.label}
-            // options={Countrylist}
-            //sx={{ width: 300 }}
-            renderInput={(params) =>
-              <TextField {...params}
+        <form className='w-full' onSubmit={SaveCompany}>
+          <div className='flex space-x-16 mb-16 '>
+            <div className='w-full'>
+              <Autocomplete
+
                 value={compid}
-                onChange={() => alert(a.name)}
-                label="Select Company*" />}
-          />
+                inputValue={compid}
+                onInputChange={(event, newInputValue) => {
+                  {
+                    // console.log(event, 'event')
+                    //alert(event);
+                    setcompid(newInputValue);
+                  }
+                }}
+                disablePortal
+                // id="combo-box-demo"
+                options={companylist.map((a, b) => a.name)}
+                renderInput={(params) =>
+                  <TextField {...params}
+                    className=""
+                    required
+                    value={compid}
+                    label="Select Company" />}
+              />
+            </div>
+            <div className='w-full'>
+              <TextField
+                value={companyname}
+                onChange={(e) => setcompanyname(e.target.value)}
+                className=""
+                required
+                label="UserGroup Name"
+                autoFocus
+                variant="outlined"
+                fullWidth
+              /></div>
+          </div>
+
+
+
           <TextField
-            value={companyname}
-            onChange={(e) => setcompanyname(e.target.value)}
+            value={desc}
+            onChange={(e) => setdesc(e.target.value)}
             className="mt-8 mb-16"
-            error={!!errorcname}
-            required
-            helperText={'required'}
-            label="UserGroup Name"
-            autoFocus
+            id="description"
+            label="Description"
+            type="text"
+            multiline
+            rows={5}
             variant="outlined"
             fullWidth
           />
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Status</InputLabel>
+            <Select required
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={status}
+              label="Status"
+              onChange={(e) => setstatus(e.target.value)}
+            >
+              <MenuItem value={1}>Active</MenuItem>
+              <MenuItem value={0}>Inactive</MenuItem>
 
-
-          <h4>Image</h4>
+            </Select>
+          </FormControl>
+          <h4><br /> Image</h4>
           <div className="flex justify-center sm:justify-start flex-wrap -mx-16">
             <Controller
               name="images"
@@ -270,7 +306,7 @@ function BasicInfoTab(props) {
               control={control}
               defaultValue=""
               render={({ field: { onChange, value } }) =>
-                createObjectURL != '' && <div
+                createObjectURL != null && createObjectURL != undefined && createObjectURL != 'null' && createObjectURL != '' && <div
 
 
                   role="button"
@@ -289,21 +325,6 @@ function BasicInfoTab(props) {
               }
             />
           </div>
-
-          <TextField
-            value={desc}
-            onChange={(e) => setdesc(e.target.value)}
-            className="mt-8 mb-16"
-            id="description"
-            label="Description"
-            type="text"
-            multiline
-            rows={5}
-            variant="outlined"
-            fullWidth
-          />
-
-
           {/*}  <Controller
         name="categories"
         control={control}
@@ -333,28 +354,28 @@ function BasicInfoTab(props) {
         )}
       />*/}
 
+          <div>
+            <br />
+            {isLoading ?
 
+              <div style={{ border: '1px solid blue', width: '12%', borderRadius: '20px', paddingLeft: '6px' }} className="whitespace-nowrap mx-4"
+              >
 
-          {isLoading ?
+                <img src="/buttonload3.gif" style={{ height: '35px' }}></img>
+              </div>
+              :
+              <Button type="submit"
+                className="whitespace-nowrap mx-4"
+                variant="contained"
+                color="secondary"
+              // onClick={handleRemoveProduct}
 
-            <div style={{ border: '1px solid blue', width: '12%', borderRadius: '20px', paddingLeft: '6px' }} className="whitespace-nowrap mx-4"
-            >
+              >
+                Submit
+              </Button>
 
-              <img src="/buttonload3.gif" style={{ height: '35px' }}></img>
-            </div>
-            :
-            <Button type="submit"
-              className="whitespace-nowrap mx-4"
-              variant="contained"
-              color="secondary"
-            // onClick={handleRemoveProduct}
-
-            >
-              Submit
-            </Button>
-
-          }
-
+            }
+          </div>
         </form>
         <ToastContainer style={{ marginTop: '50px' }} />
       </div >

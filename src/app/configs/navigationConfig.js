@@ -1226,59 +1226,128 @@ i18next.addResourceBundle('tn', 'navigation', tn);
     ],
   },
 ];*/}
-const navigationConfig = [
+let navigationConfig = [{
+  id: 'Dashbord',
+  title: 'Dashboard',
+  type: 'item',
+  icon: 'heroicons-outline:home',
+  url: 'dashboards/project',
+  translate: 'DASHBOARDS',
+},];
+if (localStorage.getItem("logintype") == 'user') {
+  navigationConfig = [
 
 
-  {
-    id: 'Dashbord',
-    title: 'Dashboard',
-    type: 'item',
-    icon: 'heroicons-outline:home',
-    url: 'dashboards/project',
-    translate: 'DASHBOARDS',
-  },
-  {
-    id: 'company',
-    title: 'Company',
-    type: 'item',
-    icon: 'heroicons-outline:collection',
-    url: 'apps/e-commerce/products',
-    translate: 'Company',
-  },
-  {
-    id: 'itemgroup',
-    title: 'ItemGroup',
-    type: 'item',
-    icon: 'heroicons-outline:book-open',
-    url: 'apps/e-commerce/itemgroup',
-    translate: 'ItemGroup',
-  },
-  {
-    id: 'item',
-    title: 'Item',
-    type: 'item',
-    icon: 'heroicons-outline:template',
-    url: 'apps/e-commerce/item',
-    translate: 'Item',
-  },
-  {
-    id: 'usergroup',
-    title: 'UserGroup',
-    type: 'item',
-    icon: 'heroicons-outline:user-group',
-    url: 'apps/e-commerce/usergroup',
-    translate: 'UserGroup',
-  },
-  {
-    id: 'user',
-    title: 'User',
-    type: 'item',
-    icon: 'heroicons-outline:user',
-    url: 'apps/e-commerce/user',
-    translate: 'User',
-  },
+    {
+      id: 'Dashbord',
+      title: 'Dashboard',
+      type: 'item',
+      icon: 'heroicons-outline:home',
+      url: 'dashboards/project',
+      translate: 'DASHBOARDS',
+    },
+    {
+      id: 'itemgroup',
+      title: 'ItemGroup',
+      type: 'item',
+      icon: 'heroicons-outline:book-open',
+      url: 'apps/e-commerce/itemgroup',
+      translate: 'ItemGroup',
+    },
+    {
+      id: 'item',
+      title: 'Item',
+      type: 'item',
+      icon: 'heroicons-outline:template',
+      url: 'apps/e-commerce/item',
+      translate: 'Item',
+    },
+    {
+      id: 'pages.search',
+      title: 'Master',
+      type: 'collapse',
+      icon: 'heroicons-outline:book-open',
+      children: [
+        {
+          id: 'pages.search.classic-search',
+          title: 'Tax',
+          type: 'item',
+          url: 'apps/e-commerce/tax',
+        },
+        {
+          id: 'pages.search.modern-search',
+          title: 'Brand',
+          type: 'item',
+          url: 'pages/search/modern',
+        },
+      ],
+    },
 
 
-];
+
+  ];
+}
+else if (localStorage.getItem("logintype") == 'admin') {
+
+  navigationConfig = [
+
+
+    {
+      id: 'Dashbordssssssss',
+      title: 'Dashboardssssssss',
+      type: 'item',
+      icon: 'heroicons-outline:home',
+      url: 'dashboards/project',
+      translate: '',
+    },
+    {
+      id: 'company',
+      title: 'Company',
+      type: 'item',
+      icon: 'heroicons-outline:collection',
+      url: 'apps/e-commerce/products',
+      translate: 'Company',
+    },
+    {
+      id: 'usergroup',
+      title: 'UserGroup',
+      type: 'item',
+      icon: 'heroicons-outline:user-group',
+      url: 'apps/e-commerce/usergroup',
+      translate: 'UserGroup',
+    },
+    {
+      id: 'user',
+      title: 'User',
+      type: 'item',
+      icon: 'heroicons-outline:user',
+      url: 'apps/e-commerce/user',
+      translate: 'User',
+    },
+    {
+      id: 'itemgroup',
+      title: 'ItemGroup',
+      type: 'item',
+      icon: 'heroicons-outline:book-open',
+      url: 'apps/e-commerce/itemgroup',
+      translate: 'ItemGroup',
+    },
+    {
+      id: 'item',
+      title: 'Item',
+      type: 'item',
+      icon: 'heroicons-outline:template',
+      url: 'apps/e-commerce/item',
+      translate: 'Item',
+    },
+
+
+
+  ];
+}
+
+
+
+
 
 export default navigationConfig;

@@ -45,7 +45,7 @@ function ForgotPasswordPage() {
   const { isValid, dirtyFields, errors } = formState;
 
   useEffect(() => {
-    setValue('email', 'admin@fusetheme.com', { shouldDirty: true, shouldValidate: true });
+    setValue('email', 'admin@lingachemicals.com', { shouldDirty: true, shouldValidate: true });
     setValue('password', 'admin', { shouldDirty: true, shouldValidate: true });
   }, [setValue]);
 

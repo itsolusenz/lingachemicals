@@ -14,16 +14,50 @@ function ProjectDashboardAppHeader(props) {
   const dispatch = useDispatch();
   const projects = useSelector(selectProjects);
   const user = useSelector(selectUser);
-
+  const [loginname, setloginname] = useState('');
+  const [loginimage, setloginimage] = useState('');
   const [selectedProject, setSelectedProject] = useState({
     id: 1,
     menuEl: null,
   });
 
+  /* useEffect(() => {
+     dispatch(getProjects());
+   }, [dispatch]);*/
   useEffect(() => {
-    dispatch(getProjects());
-  }, [dispatch]);
+    // Perform localStorage action
+    const getUser = async (a) => {
 
+      const response = await fetch('https://www.laabamone.com/LingaChemicals/api.php?eventtype=user&viewtype=listview&id=' + a);
+      const json = await response.json();
+      console.log('company', json);
+      if (json[0].count > 0) {
+        setloginname(json[0].name);
+        setloginimage(json[0].image);
+
+      }
+
+
+    }
+
+
+    const logintype = localStorage.getItem("logintype");
+
+    if (logintype == 'user') {
+      const loginid = localStorage.getItem("loginid");
+      getUser(loginid);
+    }
+    else {
+      setloginname('Linga Chemicals Admin');
+    }
+
+
+
+
+
+
+
+  }, [])
   function handleChangeProject(id) {
     setSelectedProject({
       id,
@@ -45,35 +79,38 @@ function ProjectDashboardAppHeader(props) {
     });
   }
 
-  if (_.isEmpty(projects)) {
+  /*if (_.isEmpty(projects)) {
     return null;
-  }
+  }*/
   //console.log('useruser', user.data.displayname)
-  return (
-    <div className="flex flex-col w-full px-24 sm:px-32">
-      <div className="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-32 sm:my-48">
-        <div className="flex flex-auto items-center min-w-0">
-          <Avatar className="flex-0 w-64 h-64" alt="user photo" src={user?.data?.photoURL}>
-            {user.data.displayName[0]}
-          </Avatar>
-          <div className="flex flex-col min-w-0 mx-16">
-            <Typography className="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
-              {/*}  {`Welcome back, ${user.data.displayName}!`}*/}
-              {`Welcome back, Linga Chemicals !`}
-            </Typography>
+  if (loginname != '') {
+    return (
+      <div className="flex flex-col w-full px-24 sm:px-32">
+        <div className="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-32 sm:my-48">
+          <div className="flex flex-auto items-center min-w-0">
+            <Avatar className="flex-0 w-64 h-64" alt="user photo" src={loginimage}>
+              {loginname[0]}
+            </Avatar>
+            <div className="flex flex-col min-w-0 mx-16">
+              <Typography className="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
+                {/*}  {`Welcome back, ${user.data.displayName}!`}*/}
+                {`Welcome back, ${loginname}!`}
 
-            <div className="flex items-center">
-              <FuseSvgIcon size={20} color="action">
-                heroicons-solid:bell
-              </FuseSvgIcon>
-              <Typography className="mx-6 leading-6 truncate" color="text.secondary">
-                You have 2 new messages and 15 new tasks
+
               </Typography>
+
+              {/*} <div className="flex items-center">
+                <FuseSvgIcon size={20} color="action">
+                  heroicons-solid:bell
+                </FuseSvgIcon>
+                <Typography className="mx-6 leading-6 truncate" color="text.secondary">
+                  You have 2 new messages and 15 new tasks
+                </Typography>
+              </div>*/}
             </div>
           </div>
-        </div>
-        <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
-          {/*}  <Button
+          <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
+            {/*}  <Button
             className="whitespace-nowrap"
             variant="contained"
             color="primary"
@@ -89,9 +126,9 @@ function ProjectDashboardAppHeader(props) {
           >
             Settings
   </Button>*/}
+          </div>
         </div>
-      </div>
-     {/*} <div className="flex items-center">
+        {/*} <div className="flex items-center">
         <Button
           onClick={handleOpenProjectMenu}
           className="flex items-center border border-solid border-b-0 rounded-t-xl rounded-b-0 h-40 px-16 text-13 sm:text-16"
@@ -127,8 +164,12 @@ function ProjectDashboardAppHeader(props) {
             ))}
         </Menu>
               </div>*/}
-    </div>
-  );
+      </div>
+    );
+  }
+  else {
+    return (<><center>Loading..</center></>);
+  }
 }
 
 export default ProjectDashboardAppHeader;
