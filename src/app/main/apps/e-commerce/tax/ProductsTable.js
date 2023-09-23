@@ -39,7 +39,7 @@ function ProductsTable(props) {
   useEffect(() => {
     const getCompany = async () => {
 
-      const response = await fetch('https://www.laabamone.com/LingaChemicals/api.php?eventtype=user&viewtype=listview');
+      const response = await fetch('https://www.laabamone.com/LingaChemicals/api.php?eventtype=tax&viewtype=listview');
       const json = await response.json();
       console.log('company', json);
       if (json[0].count > 0) {
@@ -90,7 +90,7 @@ function ProductsTable(props) {
   }
 
   function handleClick(item) {
-    props.navigate(`/apps/e-commerce/user/${item.id}`);
+    props.navigate(`/apps/e-commerce/tax/${item.id}`);
   }
 
   function handleCheck(event, id) {
@@ -195,35 +195,12 @@ function ProductsTable(props) {
                       />
                     </TableCell>
 
-                    <TableCell
-                      className="w-52 px-4 md:px-0"
-                      component="th"
-                      scope="row"
-                      padding="none"
-                    >
-                      {n.image != '' && n.image != null ? (
-                        <img
-                          className="w-full block rounded"
-                          src={n.image}
-                          alt={n.name}
-                        />
-                      ) : (
-                        <img
-                          className="w-full block rounded"
-                          src="assets/images/apps/ecommerce/product-image-placeholder.png"
-                          alt={n.name}
-                        />
-                      )}
-                    </TableCell>
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.usergrp_name}
-                    </TableCell>
+
+
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
                       {n.name}
                     </TableCell>
-                    <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.email}
-                    </TableCell>
+
 
 
 

@@ -89,7 +89,7 @@ function ProductsTable(props) {
   }
 
   function handleClick(item) {
-    props.navigate(`/apps/e-commerce/products/${item.id}/${item.handle}`);
+    props.navigate(`/apps/e-commerce/item/${item.id}`);
   }
 
   function handleCheck(event, id) {
@@ -216,7 +216,10 @@ function ProductsTable(props) {
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.name}
+                      {n.itemname}
+                    </TableCell>
+                    <TableCell className="p-4 md:p-16" component="th" scope="row">
+                      {n.itemcode}
                     </TableCell>
 
                     {/*}    <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">

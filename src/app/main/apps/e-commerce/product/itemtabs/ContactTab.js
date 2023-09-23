@@ -18,7 +18,6 @@ function ContactTab(props) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            required
             label="Unit Value"
             autoFocus
             id="sku"
@@ -34,7 +33,6 @@ function ContactTab(props) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            required
             label="Sales Price"
             autoFocus
             id="sku"
@@ -50,7 +48,6 @@ function ContactTab(props) {
           <TextField
             {...field}
             className="mt-8 mb-16"
-            required
             label="MRP"
             autoFocus
             id="sku"
@@ -59,8 +56,7 @@ function ContactTab(props) {
           />
         )}
       />
-      <h4> Image</h4>
-      <ProductImagesTab />
+
 
     </div>
   );

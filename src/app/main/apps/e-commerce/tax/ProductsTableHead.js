@@ -18,13 +18,7 @@ import { lighten } from '@mui/material/styles';
 import { removeProducts } from '../store/productsSlice';
 
 const rows = [
-  {
-    id: 'image',
-    align: 'left',
-    disablePadding: true,
-    label: '',
-    sort: false,
-  },
+ 
 
   {
     id: 'name',
@@ -33,13 +27,7 @@ const rows = [
     label: 'Name',
     sort: true,
   },
-  {
-    id: 'Value',
-    align: 'left',
-    disablePadding: false,
-    label: 'Value',
-    sort: true,
-  },
+
   {
     id: 'active',
     align: 'left',

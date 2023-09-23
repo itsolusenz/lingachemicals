@@ -17,11 +17,10 @@ import * as yup from 'yup';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import { getProduct, newProduct, resetProduct, selectProduct } from '../store/productSlice';
 import reducer from '../store';
-import ProductHeader from './ProductHeader';
+import ProductHeader from './itemHeader';
 import BasicInfoTab from './itemtabs/BasicInfoTab';
 import InventoryTab from './itemtabs/InventoryTab';
 import PricingTab from './itemtabs/PricingTab';
-import ProductImagesTab from './itemtabs/ProductImagesTab';
 import ShippingTab from './itemtabs/ShippingTab';
 import ContactTab from './itemtabs/ContactTab';
 import SafetyeditorTab from './itemtabs/safetyeditorTab';
@@ -112,43 +111,43 @@ function Product(props) {
   /**
    * Show Message if the requested products is not exists
    */
-  if (noProduct) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { delay: 0.1 } }}
-        className="flex flex-col flex-1 items-center justify-center h-full"
-      >
-        <Typography color="text.secondary" variant="h5">
-          There is no such product!
-        </Typography>
-        <Button
-          className="mt-24"
-          component={Link}
-          variant="outlined"
-          to="/apps/e-commerce/products"
-          color="inherit"
-        >
-          Go to Products Page
-        </Button>
-      </motion.div>
-    );
-  }
+  /* if (noProduct) {
+     return (
+       <motion.div
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1, transition: { delay: 0.1 } }}
+         className="flex flex-col flex-1 items-center justify-center h-full"
+       >
+         <Typography color="text.secondary" variant="h5">
+           There is no such product!
+         </Typography>
+         <Button
+           className="mt-24"
+           component={Link}
+           variant="outlined"
+           to="/apps/e-commerce/products"
+           color="inherit"
+         >
+           Go to Products Page
+         </Button>
+       </motion.div>
+     );
+   }*/
 
   /**
    * Wait while product data is loading and form is setted
    */
-  if (
-    _.isEmpty(form) ||
-    (product && routeParams.productId !== product.id && routeParams.productId !== 'new')
-  ) {
-    return <FuseLoading />;
-  }
+  /* if (
+     _.isEmpty(form) ||
+     (product && routeParams.productId !== product.id && routeParams.productId !== 'new')
+   ) {
+     return <FuseLoading />;
+   }*/
 
   return (
     <FormProvider {...methods}>
       <FusePageCarded
-        header={<ProductHeader editid={`${routeParams.productId}`}/>}
+        header={<ProductHeader editid={`${routeParams.productId}`} />}
         content={
           <>
             <Tabs
@@ -172,29 +171,29 @@ function Product(props) {
             </Tabs>
             <div className="p-16 sm:p-24 max-w-3xl">
               <div className={tabValue !== 0 ? 'hidden' : ''}>
-                <BasicInfoTab editid={`${routeParams.productId}`}/>
+                <BasicInfoTab editid={`${routeParams.productId}`} />
               </div>
 
               <div className={tabValue !== 1 ? 'hidden' : ''}>
-                <ContactTab editid={`${routeParams.productId}`}/>
+                <ContactTab editid={`${routeParams.productId}`} />
               </div>
 
               <div className={tabValue !== 2 ? 'hidden' : ''}>
-                <PricingTab editid={`${routeParams.productId}`}/>
+                <PricingTab editid={`${routeParams.productId}`} />
               </div>
 
               <div className={tabValue !== 3 ? 'hidden' : ''}>
-                <InventoryTab editid={`${routeParams.productId}`}/>
+                <InventoryTab editid={`${routeParams.productId}`} />
               </div>
 
               <div className={tabValue !== 4 ? 'hidden' : ''}>
-                <InventoryTab editid={`${routeParams.productId}`}/>
+                <InventoryTab editid={`${routeParams.productId}`} />
               </div>
               <div className={tabValue !== 5 ? 'hidden' : ''}>
-                <SafetyeditorTab editid={`${routeParams.productId}`}/>
+                <SafetyeditorTab editid={`${routeParams.productId}`} />
               </div>
               <div className={tabValue !== 5 ? 'hidden' : ''}>
-                <LegaleditorTab editid={`${routeParams.productId}`}/>
+                <LegaleditorTab editid={`${routeParams.productId}`} />
               </div>
             </div>
           </>

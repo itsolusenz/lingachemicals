@@ -1262,26 +1262,7 @@ if (localStorage.getItem("logintype") == 'user') {
       url: 'apps/e-commerce/item',
       translate: 'Item',
     },
-    {
-      id: 'pages.search',
-      title: 'Master',
-      type: 'collapse',
-      icon: 'heroicons-outline:book-open',
-      children: [
-        {
-          id: 'pages.search.classic-search',
-          title: 'Tax',
-          type: 'item',
-          url: 'apps/e-commerce/tax',
-        },
-        {
-          id: 'pages.search.modern-search',
-          title: 'Brand',
-          type: 'item',
-          url: 'pages/search/modern',
-        },
-      ],
-    },
+
 
 
 
@@ -1293,54 +1274,88 @@ else if (localStorage.getItem("logintype") == 'admin') {
 
 
     {
-      id: 'Dashbordssssssss',
-      title: 'Dashboardssssssss',
+      id: 'Dashbords',
+      title: 'Dashboards',
       type: 'item',
       icon: 'heroicons-outline:home',
       url: 'dashboards/project',
       translate: '',
     },
-    {
-      id: 'company',
-      title: 'Company',
-      type: 'item',
-      icon: 'heroicons-outline:collection',
-      url: 'apps/e-commerce/products',
-      translate: 'Company',
-    },
-    {
-      id: 'usergroup',
-      title: 'UserGroup',
-      type: 'item',
-      icon: 'heroicons-outline:user-group',
-      url: 'apps/e-commerce/usergroup',
-      translate: 'UserGroup',
-    },
-    {
-      id: 'user',
-      title: 'User',
-      type: 'item',
-      icon: 'heroicons-outline:user',
-      url: 'apps/e-commerce/user',
-      translate: 'User',
-    },
-    {
-      id: 'itemgroup',
-      title: 'ItemGroup',
-      type: 'item',
-      icon: 'heroicons-outline:book-open',
-      url: 'apps/e-commerce/itemgroup',
-      translate: 'ItemGroup',
-    },
-    {
-      id: 'item',
-      title: 'Item',
-      type: 'item',
-      icon: 'heroicons-outline:template',
-      url: 'apps/e-commerce/item',
-      translate: 'Item',
-    },
 
+    {
+      id: 'settings',
+      title: 'Settings',
+      type: 'collapse',
+      icon: 'settings',
+      translate: 'Settings',
+      children: [
+        {
+          id: 'settings',
+          title: 'Company',
+          type: 'item',
+          icon: 'heroicons-outline:collection',
+          url: 'apps/e-commerce/products',
+          translate: 'Company',
+        },
+        {
+          id: 'settings',
+          title: 'UserGroup',
+          type: 'item',
+          icon: 'heroicons-outline:user-group',
+          url: 'apps/e-commerce/usergroup',
+          translate: 'UserGroup',
+        },
+        {
+          id: 'settings',
+          title: 'User',
+          type: 'item',
+          icon: 'heroicons-outline:user',
+          url: 'apps/e-commerce/user',
+          translate: 'User',
+        },
+
+      ],
+    },
+    {
+      id: 'product',
+      title: 'Product',
+      type: 'collapse',
+      icon: 'developer_board',
+      translate: 'Product',
+      children: [
+        {
+          id: 'product',
+          title: 'Tax',
+          type: 'item',
+          icon: 'heroicons-outline:calendar',
+          url: 'apps/e-commerce/tax',
+        },
+        {
+          id: 'product',
+          title: 'Brand',
+          type: 'item',
+          icon: 'heroicons-outline:clipboard-check',
+          url: 'apps/e-commerce/brand',
+        },
+        {
+          id: 'product',
+          title: 'ItemGroup',
+          type: 'item',
+          icon: 'heroicons-outline:book-open',
+          url: 'apps/e-commerce/itemgroup',
+          translate: 'ItemGroup',
+        },
+        {
+          id: 'product',
+          title: 'Item',
+          type: 'item',
+          icon: 'heroicons-outline:template',
+          url: 'apps/e-commerce/item',
+          translate: 'Item',
+        },
+
+      ],
+    },
 
 
   ];

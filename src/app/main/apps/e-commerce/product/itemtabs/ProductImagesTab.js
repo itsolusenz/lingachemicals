@@ -47,7 +47,7 @@ function ProductImagesTab(props) {
   const methods = useFormContext();
   const { control, watch } = methods;
 
-  const images = watch('images');
+  //const images = watch('images');
 
   return (
     <Root>
@@ -106,7 +106,7 @@ function ProductImagesTab(props) {
             </Box>
           )}
         />
-        <Controller
+        {/*} <Controller
           name="featuredImageId"
           control={control}
           defaultValue=""
@@ -128,7 +128,7 @@ function ProductImagesTab(props) {
               </div>
             ))
           }
-        />
+        />*/}
       </div>
     </Root>
   );

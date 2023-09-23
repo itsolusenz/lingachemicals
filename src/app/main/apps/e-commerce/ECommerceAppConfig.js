@@ -4,13 +4,15 @@ const Itemgroupadd = lazy(() => import('./product/itemgroup'));
 const Usergroupadd = lazy(() => import('./product/usergroup'));
 const Itemadd = lazy(() => import('./product/item'));
 const Useradd = lazy(() => import('./product/user'));
-
+const Taxadd = lazy(() => import('./product/tax'));
+const Brandadd = lazy(() => import('./product/brand'));
 const Product = lazy(() => import('./product/Product'));
 const Products = lazy(() => import('./products/Products'));
 //const Order = lazy(() => import('./order/Order'));
 //const Orders = lazy(() => import('./orders/Orders'));
 const Itemgroup = lazy(() => import('./itemgroup/Products'));
 const Item = lazy(() => import('./item/Products'));
+const Brand = lazy(() => import('./brand/Products'));
 const Usergroup = lazy(() => import('./usergroup/Products'));
 const User = lazy(() => import('./user/Products'));
 const Tax = lazy(() => import('./tax/Products'));
@@ -40,6 +42,10 @@ const ECommerceAppConfig = {
       element: <Usergroup />,
     },
     {
+      path: 'apps/e-commerce/brand',
+      element: <Brand />,
+    },
+    {
       path: 'apps/e-commerce/user',
       element: <User />,
     },
@@ -49,7 +55,11 @@ const ECommerceAppConfig = {
     },
     {
       path: 'apps/e-commerce/tax/:productId/*',
-      element: <Tax />,
+      element: <Taxadd />,
+    },
+    {
+      path: 'apps/e-commerce/brand/:productId/*',
+      element: <Brandadd />,
     },
     {
       path: 'apps/e-commerce/itemgroup/:productId/*',

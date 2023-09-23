@@ -78,7 +78,7 @@ function BasicInfoTab(props) {
 
 
   }, [])
-  console.log(tagarr, 'ff')
+ 
   const SaveProfileimage = (id) => {
 
 
